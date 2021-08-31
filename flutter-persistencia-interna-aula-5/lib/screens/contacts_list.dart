@@ -29,10 +29,7 @@ class _ContactsListState extends State<ContactsList> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    Text('Loading')
-                  ],
+                  children: <Widget>[CircularProgressIndicator(), Text('Loading')],
                 ),
               );
               break;

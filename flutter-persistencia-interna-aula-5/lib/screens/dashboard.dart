@@ -7,6 +7,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,17 +38,17 @@ class Dashboard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Icon(
-                        Icons.people,
+                        Icons.monetization_on,
                         color: Colors.white,
                         size: 24.0,
                       ),
                       Text(
-                        'Contacts',
+                        'Transfer',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
