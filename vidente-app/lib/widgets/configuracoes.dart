@@ -86,8 +86,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
               ),
             ),
             this._isLoading
-                ? Padding(
-                    padding: EdgeInsets.all(10),
+                ? Center(
                     child: Image(
                       image: AssetImage('images/loading.gif'),
                     ),
