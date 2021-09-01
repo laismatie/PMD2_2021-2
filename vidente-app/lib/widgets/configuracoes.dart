@@ -12,11 +12,18 @@ class Configuracoes extends StatefulWidget {
 
 class _ConfiguracoesState extends State<Configuracoes> {
   List<Cidade> cidades;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     carregarCidades();
+  }
+
+  void alterarLoading() {
+    setState(() {
+      this._isLoading = !this._isLoading;
+    });
   }
 
   void carregarCidades() async {
@@ -36,45 +43,50 @@ class _ConfiguracoesState extends State<Configuracoes> {
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(16, 60, 16, 0),
-        child: TypeAheadField<Cidade>(
-          textFieldConfiguration: TextFieldConfiguration(
-            autofocus: true,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-              hintText: 'Procurar cidade',
-            ),
-          ),
-          suggestionsCallback: filtrarCidades,
-          onSuggestionSelected: (sugestao) async {
-            CidadeService service = CidadeService();
-            final String filtro = sugestao.nome + ' ' + sugestao.estado;
-            await service.pesquisarCidade(filtro);
+        child: Column(
+          children: [
+            TypeAheadField<Cidade>(
+              textFieldConfiguration: TextFieldConfiguration(
+                autofocus: true,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(),
+                  hintText: 'Procurar cidade',
+                ),
+              ),
+              suggestionsCallback: filtrarCidades,
+              onSuggestionSelected: (sugestao) {
+                CidadeService service = CidadeService();
+                final String filtro = sugestao.nome + ' ' + sugestao.estado;
 
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Column(
-                children: [
-                  SingleChildScrollView(child: CircularProgressIndicator()),
-                  Home(),
-                ],
-              ),
-            ));
-          },
-          itemBuilder: (context, sugestao) {
-            return ListTile(
-              leading: Icon(Icons.place),
-              title: Text(sugestao.nome + " - " + sugestao.siglaEstado),
-              subtitle: Text(sugestao.estado),
-            );
-          },
-          noItemsFoundBuilder: (context) => Container(
-            child: Center(
-              child: Text(
-                'Nenhuma cidade encontrada',
-                style: TextStyle(fontSize: 18),
+                service.pesquisarCidade(filtro).then((cidades) {
+                  this.alterarLoading();
+
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Home(),
+                  ));
+                });
+
+                this.alterarLoading();
+              },
+              itemBuilder: (context, sugestao) {
+                return ListTile(
+                  leading: Icon(Icons.place),
+                  title: Text(sugestao.nome + " - " + sugestao.siglaEstado),
+                  subtitle: Text(sugestao.estado),
+                );
+              },
+              noItemsFoundBuilder: (context) => Container(
+                child: Center(
+                  child: Text(
+                    'Nenhuma cidade encontrada',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ),
             ),
-          ),
+            this._isLoading ? Image(image: AssetImage('images/loading.gif')) : Text('')
+          ],
         ),
       ),
     );
