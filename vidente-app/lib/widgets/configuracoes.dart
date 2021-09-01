@@ -51,10 +51,13 @@ class _ConfiguracoesState extends State<Configuracoes> {
             final String filtro = sugestao.nome + ' ' + sugestao.estado;
             await service.pesquisarCidade(filtro);
 
-            CircularProgressIndicator();
-
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Home(),
+              builder: (context) => Column(
+                children: [
+                  SingleChildScrollView(child: CircularProgressIndicator()),
+                  Home(),
+                ],
+              ),
             ));
           },
           itemBuilder: (context, sugestao) {
