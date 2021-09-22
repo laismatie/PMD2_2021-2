@@ -27,15 +27,18 @@ class _ConfiguracoesState extends State<Configuracoes> {
   }
 
   Iterable<Cidade> filtrarCidades(String consulta) {
-    return this.cidades.where((cidade) => cidade.nome.toLowerCase().contains(consulta.toLowerCase()));
+    return this.cidades.where(
+        (cidade) => cidade.nome.toLowerCase().contains(consulta.toLowerCase()));
   }
 
   @override
   Widget build(BuildContext context) {
-    bool algumaCidadeEscolhida = CidadeController.instancia.cidadeEscolhida != null;
+    bool algumaCidadeEscolhida =
+        CidadeController.instancia.cidadeEscolhida != null;
     return Scaffold(
       appBar: AppBar(
-        title: Text(algumaCidadeEscolhida ? "Configurações" : "Escolha uma cidade"),
+        title: Text(
+            algumaCidadeEscolhida ? "Configurações" : "Escolha uma cidade"),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(16, 60, 16, 0),
@@ -48,11 +51,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
                   Icons.brightness_6_outlined,
                   size: 24,
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                VerticalDivider(),
                 Text(
-                  'Escolha o tema:',
+                  'Escolha o tema do app:',
                   style: TextStyle(fontSize: 18),
                 ),
                 Switch(
@@ -64,7 +65,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             TypeAheadField<Cidade>(
               textFieldConfiguration: TextFieldConfiguration(
@@ -78,7 +79,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
               onSuggestionSelected: (sugestao) async {
                 CidadeService service = CidadeService();
                 final String filtro = sugestao.nome + ' ' + sugestao.estado;
-                service.pesquisarCidade(filtro).then((resultado) => Navigator.pushNamed(context, '/configuracoes'));
+
+                service.pesquisarCidade(filtro).then((resultado) =>
+                    CidadeController.instancia.inicializarCidade());
                 setState(() {
                   this.carregandoCidades = true;
                 });
@@ -99,25 +102,14 @@ class _ConfiguracoesState extends State<Configuracoes> {
                 ),
               ),
             ),
-
-            // this.carregandoCidades
-            //     ? Column(
-            //         children: [
-            //           Padding(padding: EdgeInsets.all(20)),
-            //           Image(
-            //             image: AssetImage('images/loading.gif'),
-            //             width: 50,
-            //           )
-            //         ],
-            //       )
-            //     : Text(''),
-
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             ElevatedButton(
-              onPressed: () => {},
-              child: Text('Confirmar', style: TextStyle(fontSize: 14)),
+              onPressed: () {
+                Navigator.pushNamed(context, '/resumo');
+              },
+              child: Text('Salvar', style: TextStyle(fontSize: 14)),
             ),
           ],
         ),

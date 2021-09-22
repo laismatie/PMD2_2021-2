@@ -8,12 +8,11 @@ class TemaController extends ChangeNotifier {
   Future<Database> database;
 
   inicializarDB() async {
-    /**
-     * Tem que executar esse trem aqui
-     */
     WidgetsFlutterBinding.ensureInitialized();
-    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'), version: 1, onCreate: (db, version) {
-      return db.execute('CREATE TABLE tema (id INTEGER PRIMARY KEY, usarTemaEscuro  BOOLEAN)');
+    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'),
+        version: 1, onCreate: (db, version) {
+      return db.execute(
+          'CREATE TABLE tema (meutema BOOLEAN NOT NULL CHECK (meutema IN (0, 1)))');
     });
   }
 
@@ -21,8 +20,12 @@ class TemaController extends ChangeNotifier {
     usarTemaEscuro = false;
   }
 
-  trocarTema() {
+  trocarTema() async {
+    final db = await this.database;
+
     usarTemaEscuro = !usarTemaEscuro;
+
+    if (usarTemaEscuro == false) {}
     notifyListeners();
   }
 }
