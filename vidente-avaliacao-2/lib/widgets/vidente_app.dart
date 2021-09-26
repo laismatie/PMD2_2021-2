@@ -3,7 +3,6 @@ import 'package:vidente_app/controllers/cidade_controller.dart';
 import 'package:vidente_app/controllers/tema_controller.dart';
 import 'package:vidente_app/widgets/configuracoes.dart';
 import 'package:vidente_app/widgets/home.dart';
-import 'package:vidente_app/widgets/resumo.dart';
 
 class VidenteApp extends StatelessWidget {
   @override
@@ -11,11 +10,13 @@ class VidenteApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: TemaController.instancia,
       builder: (context, child) {
+        print(TemaController.instancia.temaEscolhido.lightDark);
         return MaterialApp(
             title: 'Vidente',
-            theme: TemaController.instancia.usarTemaEscuro
-                ? ThemeData.dark()
-                : ThemeData.light(),
+            theme: TemaController.instancia.temaEscolhido.lightDark == 0 ||
+                    TemaController.instancia.temaEscolhido == 0
+                ? ThemeData.light()
+                : ThemeData.dark(),
             debugShowCheckedModeBanner: false,
             home: CidadeController.instancia.cidadeEscolhida != null
                 ? Home()

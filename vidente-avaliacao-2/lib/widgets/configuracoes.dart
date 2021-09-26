@@ -3,6 +3,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:vidente_app/controllers/cidade_controller.dart';
 import 'package:vidente_app/controllers/tema_controller.dart';
 import 'package:vidente_app/models/cidade.dart';
+import 'package:vidente_app/models/tema.dart';
 import 'package:vidente_app/services/cidade_service.dart';
 
 class Configuracoes extends StatefulWidget {
@@ -37,6 +38,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
   Widget build(BuildContext context) {
     bool algumaCidadeEscolhida =
         CidadeController.instancia.cidadeEscolhida != null;
+    print(TemaController.instancia.temaEscolhido.lightDark);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -59,9 +61,14 @@ class _ConfiguracoesState extends State<Configuracoes> {
                   style: TextStyle(fontSize: 18),
                 ),
                 Switch(
-                  value: TemaController.instancia.usarTemaEscuro,
+                  value:
+                      TemaController.instancia.temaEscolhido.lightDark == 0 ||
+                              TemaController.instancia.temaEscolhido == 0
+                          ? false
+                          : true,
                   onChanged: (valor) {
-                    TemaController.instancia.trocarTema();
+                    int valorTema = valor == false ? 0 : 1;
+                    TemaController.instancia.trocarTema(Tema(valorTema));
                   },
                 ),
               ],
@@ -80,7 +87,8 @@ class _ConfiguracoesState extends State<Configuracoes> {
               ),
               suggestionsCallback: filtrarCidades,
               onSuggestionSelected: (sugestao) async {
-                final String filtro = sugestao.nome + ' ' + sugestao.estado;
+                this._controller.text =
+                    sugestao.nome + ' - ' + sugestao.siglaEstado;
               },
               itemBuilder: (context, sugestao) {
                 return ListTile(

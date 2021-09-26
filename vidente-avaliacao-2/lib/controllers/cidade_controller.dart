@@ -13,7 +13,8 @@ class CidadeController extends ChangeNotifier {
      * Tem que executar esse trem aqui
      */
     WidgetsFlutterBinding.ensureInitialized();
-    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'), version: 1, onCreate: (db, version) {
+    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'),
+        version: 1, onCreate: (db, version) {
       return db.execute(
           'CREATE TABLE cidades (id INTEGER PRIMARY KEY, codigo TEXT, nome TEXT, estado TEXT, siglaEstado TEXT)');
     });
@@ -23,7 +24,8 @@ class CidadeController extends ChangeNotifier {
     final db = await this.database;
     List<Map<String, dynamic>> cidades = await db.query('cidades');
     this.cidadeEscolhida = cidades.length > 0
-        ? Cidade.comCodigo(cidades[0]['codigo'], cidades[0]['nome'], cidades[0]['estado'], cidades[0]['siglaEstado'])
+        ? Cidade.comCodigo(cidades[0]['codigo'], cidades[0]['nome'],
+            cidades[0]['estado'], cidades[0]['siglaEstado'])
         : null;
   }
 
