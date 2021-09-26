@@ -10,7 +10,7 @@ class TemaController extends ChangeNotifier {
 
   inicializarDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-    this.database = openDatabase(join(await getDatabasesPath(), 'tema.db'),
+    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'),
         version: 1, onCreate: (db, version) {
       return db.execute(
           'CREATE TABLE tema (id INTEGER PRIMARY KEY, lightDark INTEGER)');

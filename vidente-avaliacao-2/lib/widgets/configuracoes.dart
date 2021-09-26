@@ -14,11 +14,13 @@ class Configuracoes extends StatefulWidget {
 class _ConfiguracoesState extends State<Configuracoes> {
   List<Cidade> cidades;
   bool carregandoCidades;
+  int valorTema;
   TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    this.valorTema = 0;
     this.carregandoCidades = false;
     _controller = TextEditingController();
     carregarCidades();
@@ -38,7 +40,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
   Widget build(BuildContext context) {
     bool algumaCidadeEscolhida =
         CidadeController.instancia.cidadeEscolhida != null;
-    print(TemaController.instancia.temaEscolhido.lightDark);
+    print(valorTema);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,13 +63,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
                   style: TextStyle(fontSize: 18),
                 ),
                 Switch(
-                  value:
-                      TemaController.instancia.temaEscolhido.lightDark == 0 ||
-                              TemaController.instancia.temaEscolhido == 0
-                          ? false
-                          : true,
+                  value: this.valorTema == 0 ? false : true,
                   onChanged: (valor) {
-                    int valorTema = valor == false ? 0 : 1;
+                    valorTema = valor == false ? 0 : 1;
                     TemaController.instancia.trocarTema(Tema(valorTema));
                   },
                 ),
