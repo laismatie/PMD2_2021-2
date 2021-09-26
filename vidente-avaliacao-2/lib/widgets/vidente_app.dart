@@ -23,7 +23,6 @@ class VidenteApp extends StatelessWidget {
             routes: {
               '/home': (context) => Home(),
               '/configuracoes': (context) => Configuracoes(),
-              '/resumo': (context) => Resumo(),
             });
       },
     );

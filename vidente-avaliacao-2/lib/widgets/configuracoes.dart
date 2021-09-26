@@ -13,12 +13,14 @@ class Configuracoes extends StatefulWidget {
 class _ConfiguracoesState extends State<Configuracoes> {
   List<Cidade> cidades;
   bool carregandoCidades;
+  TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
-    carregarCidades();
     this.carregandoCidades = false;
+    _controller = TextEditingController();
+    carregarCidades();
   }
 
   void carregarCidades() async {
@@ -69,6 +71,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
             ),
             TypeAheadField<Cidade>(
               textFieldConfiguration: TextFieldConfiguration(
+                controller: _controller,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
@@ -77,14 +80,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
               ),
               suggestionsCallback: filtrarCidades,
               onSuggestionSelected: (sugestao) async {
-                CidadeService service = CidadeService();
                 final String filtro = sugestao.nome + ' ' + sugestao.estado;
-
-                service.pesquisarCidade(filtro).then((resultado) =>
-                    CidadeController.instancia.inicializarCidade());
-                setState(() {
-                  this.carregandoCidades = true;
-                });
               },
               itemBuilder: (context, sugestao) {
                 return ListTile(
@@ -107,10 +103,28 @@ class _ConfiguracoesState extends State<Configuracoes> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/resumo');
+                CidadeService service = CidadeService();
+
+                service
+                    .pesquisarCidade(this._controller.text)
+                    .then((resultado) => Navigator.pushNamed(context, '/home'));
+                setState(() {
+                  this.carregandoCidades = true;
+                });
               },
               child: Text('Salvar', style: TextStyle(fontSize: 14)),
             ),
+            this.carregandoCidades
+                ? Column(
+                    children: [
+                      Padding(padding: EdgeInsets.all(20)),
+                      Image(
+                        image: AssetImage('images/loading.gif'),
+                        width: 50,
+                      )
+                    ],
+                  )
+                : Text('')
           ],
         ),
       ),
