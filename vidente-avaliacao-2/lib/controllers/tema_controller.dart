@@ -10,19 +10,17 @@ class TemaController extends ChangeNotifier {
 
   inicializarDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-    this.database = openDatabase(join(await getDatabasesPath(), 'vidente.db'),
+    this.database = openDatabase(join(await getDatabasesPath(), 'vidente2.db'),
         version: 1, onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE tema (id INTEGER PRIMARY KEY, lightDark INTEGER)');
+          'CREATE TABLE tema (id INTEGER PRIMARY KEY, valorTema INTEGER)');
     });
   }
 
   inicializarTema() async {
-    print('INICIALIZAR TEMA');
     final db = await this.database;
     List<Map<String, dynamic>> tema = await db.query('tema');
-    print(tema);
-    this.temaEscolhido = tema.length > 0 ? Tema(tema[0]['lighDark']) : null;
+    this.temaEscolhido = tema.length > 0 ? Tema(tema[0]['valorTema']) : null;
   }
 
   salvarTema(Tema tema) async {
@@ -47,7 +45,6 @@ class TemaController extends ChangeNotifier {
 
   trocarTema(Tema tema) async {
     temaEscolhido = tema;
-    salvarTema(tema);
     notifyListeners();
   }
 }

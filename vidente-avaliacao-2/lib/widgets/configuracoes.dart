@@ -13,14 +13,13 @@ class Configuracoes extends StatefulWidget {
 
 class _ConfiguracoesState extends State<Configuracoes> {
   List<Cidade> cidades;
-  bool carregandoCidades;
   int valorTema;
+  bool carregandoCidades;
   TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
-    this.valorTema = 0;
     this.carregandoCidades = false;
     _controller = TextEditingController();
     carregarCidades();
@@ -40,7 +39,6 @@ class _ConfiguracoesState extends State<Configuracoes> {
   Widget build(BuildContext context) {
     bool algumaCidadeEscolhida =
         CidadeController.instancia.cidadeEscolhida != null;
-    print(valorTema);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -63,9 +61,12 @@ class _ConfiguracoesState extends State<Configuracoes> {
                   style: TextStyle(fontSize: 18),
                 ),
                 Switch(
-                  value: this.valorTema == 0 ? false : true,
+                  value: TemaController.instancia.temaEscolhido == null ||
+                          TemaController.instancia.temaEscolhido.valorTema == 0
+                      ? false
+                      : true,
                   onChanged: (valor) {
-                    valorTema = valor == false ? 0 : 1;
+                    this.valorTema = valor == false ? 0 : 1;
                     TemaController.instancia.trocarTema(Tema(valorTema));
                   },
                 ),
@@ -85,8 +86,8 @@ class _ConfiguracoesState extends State<Configuracoes> {
               ),
               suggestionsCallback: filtrarCidades,
               onSuggestionSelected: (sugestao) async {
-                this._controller.text =
-                    sugestao.nome + ' - ' + sugestao.siglaEstado;
+                final String filtro = sugestao.nome + ' ' + sugestao.estado;
+                this._controller.text = filtro;
               },
               itemBuilder: (context, sugestao) {
                 return ListTile(
@@ -111,12 +112,17 @@ class _ConfiguracoesState extends State<Configuracoes> {
               onPressed: () {
                 CidadeService service = CidadeService();
 
-                service
-                    .pesquisarCidade(this._controller.text)
-                    .then((resultado) => Navigator.pushNamed(context, '/home'));
-                setState(() {
-                  this.carregandoCidades = true;
-                });
+                TemaController.instancia.salvarTema(Tema(this.valorTema));
+
+                if (this._controller.text != '') {
+                  service.pesquisarCidade(this._controller.text).then(
+                      (resultado) => Navigator.pushNamed(context, '/home'));
+                  setState(() {
+                    this.carregandoCidades = true;
+                  });
+                } else {
+                  print("Selecione uma cidade");
+                }
               },
               child: Text('Salvar', style: TextStyle(fontSize: 14)),
             ),

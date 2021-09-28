@@ -10,10 +10,10 @@ class VidenteApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: TemaController.instancia,
       builder: (context, child) {
-        print(TemaController.instancia.temaEscolhido.lightDark);
         return MaterialApp(
             title: 'Vidente',
-            theme: TemaController.instancia.temaEscolhido.lightDark.toInt() == 0
+            theme: TemaController.instancia.temaEscolhido == null ||
+                    TemaController.instancia.temaEscolhido.valorTema == 0
                 ? ThemeData.light()
                 : ThemeData.dark(),
             debugShowCheckedModeBanner: false,
