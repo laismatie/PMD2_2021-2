@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:istragaum/controllers/my_camera_controller.dart';
+import 'package:istragaum/services/image_service.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({Key? key}) : super(key: key);
@@ -46,8 +47,13 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CameraView'),
+        title: const Text(
+          'CameraView',
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       // É preciso utilizar um FutureBuilder,
       // pois a renderização deve aguardar a
@@ -65,7 +71,18 @@ class _CameraViewState extends State<CameraView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
+        onPressed: () async {
+          try {
+            await _initializeControllerFuture;
+
+            final image = await _controller.takePicture();
+            ImageService service = ImageService();
+            await service.saveImage(image);
+            Navigator.pushNamed(context, '/home');
+          } catch (e) {
+            print(e);
+          }
+        },
         child: const Icon(Icons.camera),
       ),
     );

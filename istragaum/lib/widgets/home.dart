@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/camera_view.dart';
@@ -67,8 +69,8 @@ class _HomeState extends State<Home> {
                   crossAxisSpacing: 2,
                 ),
                 itemBuilder: (context, index) {
-                  return Image.asset(
-                    'images/${imgList![index]}',
+                  return Image.file(
+                    File(imgList![index]),
                     fit: BoxFit.cover,
                   );
                 },

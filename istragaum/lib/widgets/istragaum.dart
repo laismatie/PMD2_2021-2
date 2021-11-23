@@ -10,6 +10,7 @@ class Istragaum extends StatelessWidget {
       title: 'Istragaum',
       debugShowCheckedModeBanner: false,
       home: Home(),
+      routes: {'/home': (context) => Home()},
     );
   }
 }
