@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  camera:
+  path_provider:
+  path:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,7 +50,7 @@ flutter:
   fonts:
     - family: Billabong
       fonts:
-        - asset: fonts/Billabong.ttf 
+        - asset: fonts/Billabong.ttf
 
 
   # To add assets to your application, add an assets section, like this:

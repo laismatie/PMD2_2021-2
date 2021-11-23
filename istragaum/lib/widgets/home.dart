@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:istragaum/services/image_service.dart';
+import 'package:istragaum/widgets/camera_view.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -80,7 +81,11 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CameraView(),
+          )),
+        },
         tooltip: 'Tirar foto',
         child: Icon(
           Icons.add,
