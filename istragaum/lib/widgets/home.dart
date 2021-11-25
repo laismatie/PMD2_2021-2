@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Container(
-        height: 500,
+        height: double.infinity,
         padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
         child: FutureBuilder<List<String>>(
           future: images,
@@ -62,22 +63,23 @@ class _HomeState extends State<Home> {
             if (snapshot.hasData) {
               List<String>? imgList = snapshot.data;
 
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 2,
-                  crossAxisSpacing: 2,
+              return Container(
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 2,
+                    crossAxisSpacing: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Image.file(
+                      File(imgList![index]),
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  itemCount: imgList!.length,
                 ),
-                itemBuilder: (context, index) {
-                  return Image.file(
-                    File(imgList![index]),
-                    fit: BoxFit.cover,
-                  );
-                },
-                itemCount: imgList!.length,
               );
             }
-
             return CircularProgressIndicator();
           },
         ),
