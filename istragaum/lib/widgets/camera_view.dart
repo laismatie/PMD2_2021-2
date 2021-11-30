@@ -48,7 +48,7 @@ class _CameraViewState extends State<CameraView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'CameraView',
+          'Câmera',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,

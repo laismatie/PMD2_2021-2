@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class Photo extends StatelessWidget {
-  final img;
+  final String img;
   const Photo({Key? key, required this.img}) : super(key: key);
 
   @override
@@ -13,13 +14,23 @@ class Photo extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Center(
-        child: Image.asset(
-          img,
-          fit: BoxFit.cover,
+      body: SizedBox(
+        height: double.infinity,
+        child: Center(
+          child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Image.file(
+              File(img),
+              fit: BoxFit.fill,
+            ),
+            elevation: 5,
+            margin: EdgeInsets.all(12),
+          ),
         ),
       ),
     );
