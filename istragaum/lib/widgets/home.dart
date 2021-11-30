@@ -1,9 +1,6 @@
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/camera_view.dart';
+import 'package:istragaum/widgets/feed.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,15 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Future<List<String>> images;
-
-  @override
-  void initState() {
-    super.initState();
-    ImageService imgService = ImageService();
-    images = imgService.retrieveImages();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,32 +45,7 @@ class _HomeState extends State<Home> {
       body: Container(
         height: double.infinity,
         padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
-        child: FutureBuilder<List<String>>(
-          future: images,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<String>? imgList = snapshot.data;
-
-              return Container(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 2,
-                    crossAxisSpacing: 2,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Image.file(
-                      File(imgList![index]),
-                      fit: BoxFit.cover,
-                    );
-                  },
-                  itemCount: imgList!.length,
-                ),
-              );
-            }
-            return CircularProgressIndicator();
-          },
-        ),
+        child: Feed(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
