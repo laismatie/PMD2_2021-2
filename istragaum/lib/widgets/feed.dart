@@ -13,7 +13,7 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  late Future<List<String>> images;
+  late Future<Iterable<String>> images;
 
   @override
   void initState() {
@@ -25,11 +25,11 @@ class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<String>>(
+      body: FutureBuilder<Iterable<String>>(
         future: images,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<String>? imgList = snapshot.data;
+            Iterable<String>? imgList = snapshot.data;
 
             return Container(
               child: GridView.builder(
@@ -42,11 +42,11 @@ class _FeedState extends State<Feed> {
                   return InkWell(
                     onLongPress: () => {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Photo(img: imgList![index]),
+                        builder: (context) => Photo(img: imgList!.elementAt(index)),
                       )),
                     },
                     child: Image.file(
-                      File(imgList![index]),
+                      File(imgList!.elementAt(index)),
                       fit: BoxFit.cover,
                     ),
                   );

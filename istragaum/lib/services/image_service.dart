@@ -3,9 +3,10 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ImageService {
-  Future<List<String>> retrieveImages() async {
+  Future<Iterable<String>> retrieveImages() async {
     final directory = await getApplicationDocumentsDirectory();
-    List<String> images = directory.listSync().map((item) => item.path).where((item) => item.endsWith('.jpg')).toList();
+    Iterable<String> images =
+        directory.listSync().map((item) => item.path).where((item) => item.endsWith('.jpg')).toList().reversed;
 
     return images;
   }
