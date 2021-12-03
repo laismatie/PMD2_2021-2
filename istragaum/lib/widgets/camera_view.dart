@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:istragaum/controllers/my_camera_controller.dart';
-import 'package:istragaum/services/image_service.dart';
+import 'package:istragaum/widgets/preview_image.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({Key? key}) : super(key: key);
@@ -55,9 +55,6 @@ class _CameraViewState extends State<CameraView> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      // É preciso utilizar um FutureBuilder,
-      // pois a renderização deve aguardar a
-      // inicialização da câmera.
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -76,9 +73,10 @@ class _CameraViewState extends State<CameraView> {
             await _initializeControllerFuture;
 
             final image = await _controller.takePicture();
-            ImageService service = ImageService();
-            await service.saveImage(image);
-            Navigator.pushNamed(context, '/home');
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PreviewImage(img: image),
+            ));
           } catch (e) {
             print(e);
           }
