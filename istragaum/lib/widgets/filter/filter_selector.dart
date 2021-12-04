@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:istragaum/widgets/filter/carousel_delegate.dart';
+import 'package:istragaum/widgets/filter/carousel.dart';
 import 'package:istragaum/widgets/filter/filter_item.dart';
 
 class FilterSelector extends StatefulWidget {
@@ -121,7 +121,7 @@ class _FilterSelectorState extends State<FilterSelector> {
       height: itemSize,
       margin: widget.padding,
       child: Flow(
-        delegate: CarouselDelegate(
+        delegate: Carousel(
           viewportOffset: viewportOffset,
           filtersPerScreen: _filtersPerScreen,
         ),
@@ -147,7 +147,7 @@ class _FilterSelectorState extends State<FilterSelector> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
-                BorderSide(width: 6.0, color: Colors.white),
+                BorderSide(width: 4.0, color: Colors.white),
               ),
             ),
           ),
