@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/filter/filter_selector.dart';
 
 class PreviewImage extends StatelessWidget {
@@ -26,15 +27,32 @@ class PreviewImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: TextButton.icon(
+          style: TextButton.styleFrom(alignment: Alignment.centerLeft),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.close_rounded,
+            color: Colors.black,
+          ),
+          label: Text(
+            'Filtros',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leadingWidth: double.infinity,
+      ),
       body: Stack(
         children: [
-          Positioned.fill(
+          Center(
             child: _buildPhotoWithFilter(img),
           ),
-          Positioned(
-            left: 0.0,
-            right: 0.0,
-            bottom: 0.0,
+          Positioned.fill(
             child: _buildFilterSelector(),
           ),
         ],

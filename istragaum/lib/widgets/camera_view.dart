@@ -47,13 +47,24 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Câmera',
-          style: TextStyle(color: Colors.black),
+        leading: TextButton.icon(
+          style: TextButton.styleFrom(alignment: Alignment.centerLeft),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.close_rounded,
+            color: Colors.black,
+          ),
+          label: Text(
+            'Câmera',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leadingWidth: double.infinity,
       ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,

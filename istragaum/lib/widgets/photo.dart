@@ -9,14 +9,24 @@ class Photo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Photo',
-          style: TextStyle(color: Colors.black),
+        leading: TextButton.icon(
+          style: TextButton.styleFrom(alignment: Alignment.centerLeft),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+          ),
+          label: Text(
+            'Foto',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
         ),
-        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.black),
+        leadingWidth: double.infinity,
       ),
       body: SizedBox(
         height: double.infinity,
