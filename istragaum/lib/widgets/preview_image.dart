@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/filter/filter_selector.dart';
 
 class PreviewImage extends StatelessWidget {
@@ -49,7 +48,7 @@ class PreviewImage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Center(
+          Positioned.fill(
             child: _buildPhotoWithFilter(img),
           ),
           Positioned.fill(

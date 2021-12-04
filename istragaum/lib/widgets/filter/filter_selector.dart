@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/filter/carousel.dart';
 import 'package:istragaum/widgets/filter/filter_item.dart';
 

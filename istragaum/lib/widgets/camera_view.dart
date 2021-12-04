@@ -12,11 +12,7 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  //Objeto capaz de controlar a câmera
-  // do dispositivo.
   late CameraController _controller;
-  // Guarda a Future que indicará o status
-  // de inicialização da câmera
   late Future<void> _initializeControllerFuture;
 
   @override
@@ -26,19 +22,13 @@ class _CameraViewState extends State<CameraView> {
       MyCameraController.instance.camera,
       ResolutionPreset.medium,
     );
-    _initializeControllerFuture = _controller.initialize();
 
-    // Utilizado somente para garantir que
-    // a orientação da webcam ficará correta.
-    // Deve ser comentado/removido quando for
-    // gerar o APK para o dispositivo real.
+    _initializeControllerFuture = _controller.initialize();
     _controller.lockCaptureOrientation(DeviceOrientation.landscapeRight);
   }
 
   @override
   void dispose() {
-    // Libera a câmera quando o widget
-    // for removido (ex: app encerrado)
     _controller.dispose();
     super.dispose();
   }
@@ -79,6 +69,7 @@ class _CameraViewState extends State<CameraView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
         onPressed: () async {
           try {
             await _initializeControllerFuture;
@@ -92,7 +83,10 @@ class _CameraViewState extends State<CameraView> {
             print(e);
           }
         },
-        child: const Icon(Icons.camera),
+        child: const Icon(
+          Icons.camera,
+          color: Colors.black,
+        ),
       ),
     );
   }

@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Padding(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(10),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: Image(
@@ -55,10 +55,11 @@ class _HomeState extends State<Home> {
         },
         tooltip: 'Tirar foto',
         child: Icon(
-          Icons.add,
+          Icons.photo_camera,
           color: Colors.black,
         ),
         backgroundColor: Colors.white,
+        elevation: 2,
       ),
     );
   }
