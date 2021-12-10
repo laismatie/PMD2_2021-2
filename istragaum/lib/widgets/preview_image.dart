@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:istragaum/services/image_service.dart';
 import 'package:istragaum/widgets/filter/filter_selector.dart';
 
 class PreviewImage extends StatelessWidget {
@@ -53,6 +54,30 @@ class PreviewImage extends StatelessWidget {
           ),
           Positioned.fill(
             child: _buildFilterSelector(),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.all(32),
+              child: CircleAvatar(
+                radius: 32,
+                backgroundColor: Colors.black.withOpacity(0.5),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () async {
+                    final color = _filterColor.value;
+
+                    ImageService service = ImageService();
+                    await service.saveImage(img, color);
+                    Navigator.pushNamed(context, '/home');
+                  },
+                ),
+              ),
+            ),
           ),
         ],
       ),
